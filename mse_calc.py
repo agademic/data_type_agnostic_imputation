@@ -6,6 +6,9 @@ Created on Fri Nov 22 13:54:29 2019
 @author: a.gogohia
 """
 
+import os
+import numpy as np
+
 def open_list(filename):
     """
     Function, that opens a file as a list and converts its string formatted
@@ -51,13 +54,8 @@ def mse(targetlist, predlist):
     MSE : Mean Squared Error
 
     """
-    summation = 0  # variable to store sum of differences
-    for i in range (0,len(targetlist)):  #looping through each element of the list
-      difference = targetlist[i] - predlist[i]  #finding the difference between observed and predicted value
-      squared_difference = difference**2  #taking square of the differene 
-      summation = summation + squared_difference  #taking a sum of all the differences
-    MSE = summation/len(targetlist)  #dividing summation by total values to obtain average
-    print("The Mean Square Error is: " , MSE)
+    MSE = ((np.asarray(targetlist)-np.asarray(predlist)) ** 2).mean()
+    # print("The Mean Square Error is: " , MSE)
     return MSE
 
 def progress_mse(directory, target):
@@ -84,8 +82,9 @@ def progress_mse(directory, target):
             continue
         path = directory + '/' + filename # create full path to open the files
         doc = open_list(path) # load and clean doc
-        print(doc[0])
+        #print(doc[0])
         MSE = mse(doc, target)
+        print("The Mean Square Error for {} is: ".format(filename) , MSE)
         mse_list.append(MSE)
     return mse_list
 

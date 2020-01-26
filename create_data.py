@@ -7,7 +7,7 @@ Created on Mon Nov  4 16:40:10 2019
 """
 
 import os
-os.chdir('/Users/a.gogohia/OneDrive/Dokumente/Master Data Science/Master Thesis/Master Program')
+os.chdir('/Users/a.gogohia/Documents/GitHub/data_type_agnostic_imputation')
 import numpy as np
 import pandas as pd
 

@@ -8,11 +8,22 @@ Created on Thu Jan 16 14:01:09 2020
 
 import os
 import numpy as np
-from sklearn.datasets import load_boston
+from sklearn.datasets import (
+    load_boston,
+    load_wine
+    )
 
-os.chdir('/Users/a.gogohia/OneDrive/Dokumente/Master Data Science/Master Thesis/Master Program')
+os.chdir('/Users/a.gogohia/Documents/GitHub/data_type_agnostic_imputation')
 
-def convert_to_strings(dataset=load_boston(return_X_y=False)):
+def load_data(data_import, return_X_y=False):
+    if return_X_y is True:
+        X, y = data_import(return_X_y=True)
+        return X, y
+    else:
+        X = data_import(return_X_y=False)
+        return X
+
+def convert_to_strings(dataset):
     X = dataset.data
     y = dataset.target
     X_names = ['<{}>'.format(w) for w in dataset.feature_names] # get column names
@@ -31,10 +42,10 @@ def convert_to_strings(dataset=load_boston(return_X_y=False)):
         whole_list.append(' '.join(sublist))
     return whole_list, y_str
 
-def create_source_factors(dataset=load_boston(return_X_y=True)):
-    X, y = dataset
+def create_source_factors(dataset):
+    X = dataset.data
     # get names of data columns
-    X_names = ['<{}>'.format(w) for w in load_boston(return_X_y=False).feature_names]
+    X_names = ['<{}>'.format(w) for w in dataset.feature_names]
     # create dataset with column names
     X_named = np.vstack((X_names,X))
     source_factors = []
@@ -53,7 +64,7 @@ def shuffle_data(source, target, source_factors):
     source, target, source_factors = zip(*c)
     return source, target, source_factors
 
-def create_files(source, target, source_factors, num_dev):
+def create_files(source, target, source_factors, num_dev, file_dir):
     
     num_samples=len(source)
     
@@ -68,7 +79,7 @@ def create_files(source, target, source_factors, num_dev):
     dev_source_factors = source_factors[num_samples-num_dev:] # validation target factors
     
     
-    file_dir='boston_data'
+    file_dir=str(file_dir)
     # write files
     if not os.path.exists(file_dir):
         os.mkdir(file_dir)
@@ -97,12 +108,18 @@ def create_files(source, target, source_factors, num_dev):
         for sample in dev_source_factors:
             source_f1.write(sample + "\n")
 
-source_factors = create_source_factors()
-source, target = convert_to_strings()
+dataset_dict = {'boston_data': load_boston, 
+                'wine_data': load_wine}
 
-source, target, source_factors = shuffle_data(source, target, source_factors)
-
-num_dev=30
+for name, loader in dataset_dict.items():
+    dataset = load_data(loader, False)
+    print(name)
+    source_factors = create_source_factors(dataset)
+    source, target = convert_to_strings(dataset)
     
-create_files(source, target, source_factors, num_dev)
+    source, target, source_factors = shuffle_data(source, target, source_factors)
+    
+    num_dev=30
+        
+    create_files(source, target, source_factors, num_dev, name)
 
