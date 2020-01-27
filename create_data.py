@@ -16,6 +16,7 @@ def create_data(num_samples = 10000,
                 target_type='quadratic',
                 c_1=2,
                 c_2=3,
+                noise=0.01,
                 file_dir='data'):
     """
     Function to create synthetic data. This function generates a list with randomly
@@ -32,7 +33,7 @@ def create_data(num_samples = 10000,
         # generate source values
         x = abs(np.random.normal(0, 2, num_samples))
         # generate target values
-        y = x*x+np.random.normal(0, 1)*0.01
+        y = x*x+np.random.normal(0, 1)*noise
             
     else:
             
@@ -40,7 +41,7 @@ def create_data(num_samples = 10000,
         x = np.random.normal(0, 2, num_samples)
         c_1 = c_1
         c_2 = c_2
-        y = x*c_1+c_2+np.random.normal(0, 1)*0.01
+        y = x*c_1+c_2+np.random.normal(0, 1)*noise
         
     # create datafame 
     df = pd.DataFrame({'col1': '<source>', 'col2': x, 'col3': y})

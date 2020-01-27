@@ -10,10 +10,11 @@ import os
 import numpy as np
 from sklearn.datasets import (
     load_boston,
-    load_wine
+    load_wine,
+    load_breast_cancer
     )
 
-os.chdir('/Users/a.gogohia/Documents/GitHub/data_type_agnostic_imputation')
+os.chdir('/Users/a.gogohia/Documents/GitHub/data_type_agnostic_imputation/data')
 
 def load_data(data_import, return_X_y=False):
     if return_X_y is True:
@@ -64,9 +65,10 @@ def shuffle_data(source, target, source_factors):
     source, target, source_factors = zip(*c)
     return source, target, source_factors
 
-def create_files(source, target, source_factors, num_dev, file_dir):
+def create_files(source, target, source_factors, file_dir, num_dev=0.1):
     
-    num_samples=len(source)
+    num_samples = len(source)
+    num_dev = round(num_samples*num_dev)
     
     # split training and validation data
     train_samples = source[:num_samples-num_dev] # training source data
@@ -109,7 +111,9 @@ def create_files(source, target, source_factors, num_dev, file_dir):
             source_f1.write(sample + "\n")
 
 dataset_dict = {'boston_data': load_boston, 
-                'wine_data': load_wine}
+                'wine_data': load_wine,
+                'breast_cancer_data': load_breast_cancer,
+                }
 
 for name, loader in dataset_dict.items():
     dataset = load_data(loader, False)
@@ -121,5 +125,5 @@ for name, loader in dataset_dict.items():
     
     num_dev=30
         
-    create_files(source, target, source_factors, num_dev, name)
+    create_files(source, target, source_factors, name)
 
