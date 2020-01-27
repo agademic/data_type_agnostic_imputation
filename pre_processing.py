@@ -66,6 +66,29 @@ def shuffle_data(source, target, source_factors):
     return source, target, source_factors
 
 def create_files(source, target, source_factors, file_dir, num_dev=0.1):
+    """
+    Function to create input files for the sockeye model. It takes the datasets
+    as input and creates distinct training and test files for source, target 
+    and source factors.
+
+    Parameters
+    ----------
+    source : list
+        List with source variables.
+    target : list
+        List with .
+    source_factors : list
+        DESCRIPTION.
+    file_dir : str, file_path
+        DESCRIPTION.
+    num_dev : float, optional
+        Amount of validation data to be created. The default is 0.1.
+
+    Returns
+    -------
+    Creates files for source, target and source factor variables in given directory.
+
+    """
     
     num_samples = len(source)
     num_dev = round(num_samples*num_dev)
@@ -122,8 +145,6 @@ for name, loader in dataset_dict.items():
     source, target = convert_to_strings(dataset)
     
     source, target, source_factors = shuffle_data(source, target, source_factors)
-    
-    num_dev=30
         
     create_files(source, target, source_factors, name)
 
