@@ -1,0 +1,19 @@
+{
+    "<pad>": 0,
+    "<unk>": 1,
+    "<s>": 2,
+    "</s>": 3,
+    "<proline>": 4,
+    "<alcohol>": 5,
+    "<magnesium>": 6,
+    "<alcalinity_of_ash>": 7,
+    "<proanthocyanins>": 8,
+    "<hue>": 9,
+    "<malic_acid>": 10,
+    "<od280/od315_of_diluted_wines>": 11,
+    "<flavanoids>": 12,
+    "<nonflavanoid_phenols>": 13,
+    "<ash>": 14,
+    "<total_phenols>": 15,
+    "<color_intensity>": 16
+}
