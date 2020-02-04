@@ -8,6 +8,7 @@ Created on Thu Jan 16 14:01:09 2020
 
 import os
 import numpy as np
+import sklearn
 from sklearn.datasets import (
     load_boston,
     load_wine,
@@ -18,10 +19,17 @@ os.chdir('/Users/a.gogohia/Documents/GitHub/data_type_agnostic_imputation/data')
 
 def load_data(data_import, return_X_y=False):
     if return_X_y is True:
-        X, y = data_import(return_X_y=True)
+        try:
+            X, y = data_import(return_X_y=True)
+
+        except:
+            X, y = sklearn.datasets.fetch_openml(str(data_import), return_X_y=True)
         return X, y
     else:
-        X = data_import(return_X_y=False)
+        try:
+            X = data_import(return_X_y=False)
+        except:
+            X = sklearn.datasets.fetch_openml(str(data_import), return_X_y=False)
         return X
 
 def convert_to_strings(dataset):
@@ -135,7 +143,8 @@ def create_files(source, target, source_factors, file_dir, num_dev=0.1):
 
 dataset_dict = {'boston_data': load_boston, 
                 'wine_data': load_wine,
-                'breast_cancer_data': load_breast_cancer,
+                'blood_transfusion_data': 'blood-transfusion-service-center',
+                'german_credit_data': 'credit-g'
                 }
 
 for name, loader in dataset_dict.items():

@@ -12,7 +12,7 @@ import numpy as np
 import pandas as pd
 
 def create_data(num_samples = 10000,
-                num_dev = 1000,
+                num_dev = 0.1,
                 target_type='quadratic',
                 c_1=2,
                 c_2=3,
@@ -24,8 +24,9 @@ def create_data(num_samples = 10000,
     list and source factors (labels) for the first list.
     
     Input: 
-        n: number of values to be generated
-        target_type: 'quadratic' for quadratic targets to be generated or 
+        num_samples: int, total number of values to be generated
+        num_dev: float, amount of validation data
+        target_type: string, 'quadratic' for quadratic targets to be generated or 
         'linear' for linear target values
     """
     if target_type == 'quadratic':
@@ -63,6 +64,7 @@ def create_data(num_samples = 10000,
         elem = ' '.join(['<source>'] * (len(line)+1))
         source_factor.append(elem)
     
+    num_dev = round(num_samples*num_dev)
     # split training and validation data
     train_samples = source[:num_samples-num_dev] # training source data
     dev_samples = source[num_samples-num_dev:] # validation source data
