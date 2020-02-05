@@ -59,10 +59,10 @@ def create_data(num_samples = 10000,
     target = target.tolist()
     
     # create list with source factors
-    source_factor = []
+    source_factors = []
     for line in df1:
         elem = ' '.join(['<source>'] * (len(line)+1))
-        source_factor.append(elem)
+        source_factors.append(elem)
     
     num_dev = round(num_samples*num_dev)
     # split training and validation data
@@ -72,8 +72,8 @@ def create_data(num_samples = 10000,
     train_target = target[:num_samples-num_dev] # training target data
     dev_target = target[num_samples-num_dev:] # validation target data
     
-    train_source_factors = source_factor[:num_samples-num_dev] # training source factors
-    dev_source_factors = source_factor[num_samples-num_dev:] # validation target factors
+    train_source_factors = source_factors[:num_samples-num_dev] # training source factors
+    dev_source_factors = source_factors[num_samples-num_dev:] # validation target factors
     
     # write files
     if not os.path.exists(file_dir):

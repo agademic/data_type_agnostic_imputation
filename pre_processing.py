@@ -9,10 +9,10 @@ Created on Thu Jan 16 14:01:09 2020
 import os
 import numpy as np
 import sklearn
+import pandas as pd
 from sklearn.datasets import (
     load_boston,
     load_wine,
-    load_breast_cancer
     )
 
 os.chdir('/Users/a.gogohia/Documents/GitHub/data_type_agnostic_imputation/data')
@@ -73,6 +73,61 @@ def shuffle_data(source, target, source_factors):
     source, target, source_factors = zip(*c)
     return source, target, source_factors
 
+def create_numerical_data(num_samples = 10000,
+                num_dev = 0.1,
+                target_type='quadratic',
+                c_1=2,
+                c_2=3,
+                noise=0.01,
+                file_dir='data'):
+    """
+    Function to create synthetic data. This function generates a list with randomly
+    generated numerical values (normal distributed), another list with quadratic values from the first 
+    list and source factors (labels) for the first list.
+    
+    Input: 
+        num_samples: int, total number of values to be generated
+        num_dev: float, amount of validation data
+        target_type: string, 'quadratic' for quadratic targets to be generated or 
+        'linear' for linear target values
+    """
+    if target_type == 'quadratic':
+        
+        # generate source values
+        x = abs(np.random.normal(0, 2, num_samples))
+        # generate target values
+        y = x*x+np.random.normal(0, 1)*noise
+            
+    else:
+            
+        # generate source values
+        x = np.random.normal(0, 2, num_samples)
+        c_1 = c_1
+        c_2 = c_2
+        y = x*c_1+c_2+np.random.normal(0, 1)*noise
+        
+    # create datafame 
+    df = pd.DataFrame({'col1': '<source>', 'col2': x, 'col3': y})
+    # round floats to 8 decimals and format to strings, keep trailing zeros
+    df1 = df['col2'].apply(lambda x: '{:.8f}'.format(round(x, 8)))
+    # split tokens by character and combine with source factor
+    df2 = df1.apply(lambda line: " ".join([ch for ch in line]))
+    df3 = df['col1'] + ' ' + df2
+    source = df3.tolist()
+    
+    # split target tokens by character
+    target = df['col3'].apply(lambda x: '{:.8f}'.format(round(x, 8)))
+    target = target.apply(lambda line: " ".join([ch for ch in line]))
+    target = target.tolist()
+    
+    # create list with source factors
+    source_factors = []
+    for line in df1:
+        elem = ' '.join(['<source>'] * (len(line)+1))
+        source_factors.append(elem)
+        
+    return source, target, source_factors
+
 def create_files(source, target, source_factors, file_dir, num_dev=0.1):
     """
     Function to create input files for the sockeye model. It takes the datasets
@@ -88,7 +143,7 @@ def create_files(source, target, source_factors, file_dir, num_dev=0.1):
     source_factors : list
         DESCRIPTION.
     file_dir : str, file_path
-        DESCRIPTION.
+        Directory path where files should be saved.
     num_dev : float, optional
         Amount of validation data to be created. The default is 0.1.
 
