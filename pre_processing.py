@@ -212,3 +212,12 @@ for name, loader in dataset_dict.items():
         
     create_files(source, target, source_factors, name)
 
+# create quadratic and linear numerical values with different noise factors
+noise_list = [0.001, 0.01, 0.1, 1]
+for noise in noise_list:
+    source, target, source_factors = create_numerical_data(noise=noise)
+    create_files(source, target, source_factors, 'quadratic_with_noise_{noise}'.format(noise=noise))
+
+for noise in noise_list:
+    source, target, source_factors = create_numerical_data(target_type='linear', noise=noise)
+    create_files(source, target, source_factors, 'linear_with_noise_{noise}'.format(noise=noise))
