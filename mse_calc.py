@@ -88,7 +88,7 @@ def progress_mse(directory, target):
         mse_list.append(MSE)
     return mse_list
 
-target = open_list('/Users/a.gogohia/sockeye/data_quadratic/data/sockeye_model_large2/decode.target')
-directory = '/Users/a.gogohia/sockeye/data_quadratic/data/sockeye_model_large2'
+target = open_list('/Users/a.gogohia/Documents/GitHub/data_type_agnostic_imputation/data/Numerical/quadratic_with_noise_1/sockeye_model_large/decode.target')
+directory = '/Users/a.gogohia/Documents/GitHub/data_type_agnostic_imputation/data/Numerical/quadratic_with_noise_1/sockeye_model_large'
 
 mse_list = progress_mse(directory, target)

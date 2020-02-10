@@ -31,7 +31,100 @@ def load_data(data_import, return_X_y=False):
         except:
             X = sklearn.datasets.fetch_openml(str(data_import), return_X_y=False)
         return X
+    
+def generate_missing_mask(dataset, percent_missing=10, missingness='MCAR'):
+    arr = dataset.data
+    arr = np.concatenate([arr, np.reshape(dataset.target, (dataset.target.shape[0], 1))], axis=1)
+    X = arr
+    if missingness=='MCAR':
+        # missing completely at random
+        mask = np.random.rand(*X.shape) < percent_missing / 100.
+    elif missingness=='MAR':
+        # missing at random, missingness is conditioned on a random other column
+        # this case could contain MNAR cases, when the percentile in the other column is 
+        # computed including values that are to be masked
+        mask = np.zeros(X.shape)
+        n_values_to_discard = int((percent_missing / 100) * X.shape[0])
+        # for each affected column
+        for col_affected in range(X.shape[1]):
+            # select a random other column for missingness to depend on
+            depends_on_col = np.random.choice([c for c in range(X.shape[1]) if c != col_affected])
+            # pick a random percentile of values in other column
+            if n_values_to_discard < X.shape[0]:
+                discard_lower_start = np.random.randint(0, X.shape[0]-n_values_to_discard)
+            else:
+                discard_lower_start = 0
+            discard_idx = range(discard_lower_start, discard_lower_start + n_values_to_discard)
+            values_to_discard = X[:,depends_on_col].argsort()[discard_idx]
+            mask[values_to_discard, col_affected] = 1
+    elif missingness == 'MNAR':
+        # missing not at random, missingness of one column depends on unobserved values in this column
+        mask = np.zeros(X.shape)
+        n_values_to_discard = int((percent_missing / 100) * X.shape[0])
+        # for each affected column
+        for col_affected in range(X.shape[1]):
+            # pick a random percentile of values in other column
+            if n_values_to_discard < X.shape[0]:
+                discard_lower_start = np.random.randint(0, X.shape[0]-n_values_to_discard)
+            else:
+                discard_lower_start = 0
+            discard_idx = range(discard_lower_start, discard_lower_start + n_values_to_discard)
+            values_to_discard = X[:,col_affected].argsort()[discard_idx]
+            mask[values_to_discard, col_affected] = 1
+    return pd.DataFrame(mask) > 0
 
+def generate_missingness(dataset, mask, target_column=-1, nan_value='N'):
+    """
+    Function to create missingness in a specific dataset with a given missing mask.
+    Returns a source and a test dataset as bunch objects. The target column can
+    be specified.
+
+    Parameters
+    ----------
+    dataset : sklearn.utils.bunch object
+        Dataset to be filled with missing values.
+    mask : pandas.DataFrame object
+        Missing values mask, Boolean.
+    target_column : int, optional
+        Column which should be treated as target. The default is -1.
+    nan_value : str, optional
+        Value which should replace NaN values. The default is 'N'.
+
+    Returns
+    -------
+    dataset_source : sklearn.utils.bunch object
+        Dataset bunch object for further preprocessing, used for training.
+    dataset_test : sklearn.utils.bunch object
+        Dataset bunch object for further preprocessing, used for testing.
+
+    """
+    # convert to array to merge source and target values
+    arr = dataset.data
+    arr = np.concatenate([arr, np.reshape(dataset.target, (dataset.target.shape[0], 1))], axis=1)
+    # convert to DataFrame to easily select mask
+    df = pd.DataFrame(arr)
+    df_nans = df[~mask]
+    df_source = df_nans[np.isfinite(df_nans.iloc[:,target_column])]
+    df_source.fillna(nan_value, inplace=True)
+    df_test = df_nans.drop(df_source.index)
+    df_test.fillna(nan_value, inplace=True)
+    # create bunch objects
+    shape = dataset.data.shape
+    df_dropped = df_source.drop(df_source.columns[target_column], axis=1)
+    dataset_source = sklearn.utils.Bunch(data=np.array(df_dropped).reshape(-1, shape[1]),
+                                         feature_names=dataset.feature_names,
+                                         target=np.array(df_source.iloc[:,target_column]).reshape(-1, 1))
+    df_dropped = df_test.drop(df_test.columns[target_column], axis=1)
+    dataset_test = sklearn.utils.Bunch(data=np.array(df_dropped).reshape(-1, shape[1]).reshape(-1, shape[1]),
+                                       feature_names=dataset.feature_names,
+                                       target=np.array(df_test.iloc[:,target_column]).reshape(-1, 1))
+
+    return dataset_source, dataset_test
+dataset = load_boston()
+mask = generate_missing_mask(dataset)
+t, t1 = generate_missingness(dataset, mask)
+dataset = create_numerical_data()
+mask = generate_missing_mask(dataset)
 def convert_to_strings(dataset):
     X = dataset.data
     y = dataset.target
@@ -95,38 +188,44 @@ def create_numerical_data(num_samples = 10000,
         
         # generate source values
         x = abs(np.random.normal(0, 2, num_samples))
+        x = np.reshape(x, (x.shape[0],1))
         # generate target values
         y = x*x+np.random.normal(0, 1)*noise
+        y = np.reshape(y, (y.shape[0],1))
             
     else:
             
         # generate source values
         x = np.random.normal(0, 2, num_samples)
+        x = np.reshape(x, (x.shape[0],1))
         c_1 = c_1
         c_2 = c_2
         y = x*c_1+c_2+np.random.normal(0, 1)*noise
-        
-    # create datafame 
-    df = pd.DataFrame({'col1': '<source>', 'col2': x, 'col3': y})
-    # round floats to 8 decimals and format to strings, keep trailing zeros
-    df1 = df['col2'].apply(lambda x: '{:.8f}'.format(round(x, 8)))
-    # split tokens by character and combine with source factor
-    df2 = df1.apply(lambda line: " ".join([ch for ch in line]))
-    df3 = df['col1'] + ' ' + df2
-    source = df3.tolist()
+        y = np.reshape(y, (y.shape[0],1))
     
-    # split target tokens by character
-    target = df['col3'].apply(lambda x: '{:.8f}'.format(round(x, 8)))
-    target = target.apply(lambda line: " ".join([ch for ch in line]))
-    target = target.tolist()
+    dataset = sklearn.utils.Bunch(data=x,feature_names=np.array(['source']), target=y)
     
-    # create list with source factors
-    source_factors = []
-    for line in df1:
-        elem = ' '.join(['<source>'] * (len(line)+1))
-        source_factors.append(elem)
+    # # create datafame 
+    # df = pd.DataFrame({'col1': '<source>', 'col2': x, 'col3': y})
+    # # round floats to 8 decimals and format to strings, keep trailing zeros
+    # df1 = df['col2'].apply(lambda x: '{:.8f}'.format(round(x, 8)))
+    # # split tokens by character and combine with source factor
+    # df2 = df1.apply(lambda line: " ".join([ch for ch in line]))
+    # df3 = df['col1'] + ' ' + df2
+    # source = df3.tolist()
+    
+    # # split target tokens by character
+    # target = df['col3'].apply(lambda x: '{:.8f}'.format(round(x, 8)))
+    # target = target.apply(lambda line: " ".join([ch for ch in line]))
+    # target = target.tolist()
+    
+    # # create list with source factors
+    # source_factors = []
+    # for line in df1:
+    #     elem = ' '.join(['<source>'] * (len(line)+1))
+    #     source_factors.append(elem)
         
-    return source, target, source_factors
+    return dataset
 
 def create_files(source, target, source_factors, file_dir, num_dev=0.1):
     """
@@ -221,3 +320,4 @@ for noise in noise_list:
 for noise in noise_list:
     source, target, source_factors = create_numerical_data(target_type='linear', noise=noise)
     create_files(source, target, source_factors, 'linear_with_noise_{noise}'.format(noise=noise))
+
