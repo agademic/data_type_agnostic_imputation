@@ -103,28 +103,28 @@ def generate_missingness(dataset, mask, target_column=-1, nan_value='N'):
     arr = np.concatenate([arr, np.reshape(dataset.target, (dataset.target.shape[0], 1))], axis=1)
     # convert to DataFrame to easily select mask
     df = pd.DataFrame(arr)
+    # convert to integers if type categorical
+    #df.iloc[:, target_column] = pd.to_numeric(df.iloc[:,target_column])
     df_nans = df[~mask]
-    df_source = df_nans[np.isfinite(df_nans.iloc[:,target_column])]
+    #df_source = df_nans[np.isfinite(df_nans.iloc[:,target_column])]
+    df_source = df_nans[~df_nans.iloc[:,target_column].isnull()]
     df_source.fillna(nan_value, inplace=True)
     df_test = df_nans.drop(df_source.index)
     df_test.fillna(nan_value, inplace=True)
     # create bunch objects
     shape = dataset.data.shape
     df_dropped = df_source.drop(df_source.columns[target_column], axis=1)
+    # need to reshape data to (n, 1) in case there is only one column
     dataset_source = sklearn.utils.Bunch(data=np.array(df_dropped).reshape(-1, shape[1]),
                                          feature_names=dataset.feature_names,
-                                         target=np.array(df_source.iloc[:,target_column]).reshape(-1, 1))
+                                         target=np.array(df_source.iloc[:,target_column]))
     df_dropped = df_test.drop(df_test.columns[target_column], axis=1)
     dataset_test = sklearn.utils.Bunch(data=np.array(df_dropped).reshape(-1, shape[1]).reshape(-1, shape[1]),
                                        feature_names=dataset.feature_names,
-                                       target=np.array(df_test.iloc[:,target_column]).reshape(-1, 1))
+                                       target=np.array(df_test.iloc[:,target_column]))
 
     return dataset_source, dataset_test
-dataset = load_boston()
-mask = generate_missing_mask(dataset)
-t, t1 = generate_missingness(dataset, mask)
-dataset = create_numerical_data()
-mask = generate_missing_mask(dataset)
+
 def convert_to_strings(dataset):
     X = dataset.data
     y = dataset.target
@@ -154,7 +154,7 @@ def create_source_factors(dataset):
     for i in range(1,X_named.shape[0]):
         placeholder = []
         for j in range(X_named.shape[1]):
-            for ch in X_named[i,j]:
+            for ch in str(X_named[i,j]):
                 placeholder.append(str(X_named[0,j]))
             placeholder.append(str(X_named[0,j])) # add one additional sf
         source_factors.append(' '.join(placeholder))
@@ -269,7 +269,7 @@ def create_files(source, target, source_factors, file_dir, num_dev=0.1):
     file_dir=str(file_dir)
     # write files
     if not os.path.exists(file_dir):
-        os.mkdir(file_dir)
+        os.makedirs(file_dir)
             
     with open("{}/train.source".format(file_dir), "w") as source1:
         for sample in train_samples:
@@ -294,30 +294,4 @@ def create_files(source, target, source_factors, file_dir, num_dev=0.1):
     with open("{}/dev.source_factors".format(file_dir), "w") as source_f1:
         for sample in dev_source_factors:
             source_f1.write(sample + "\n")
-
-dataset_dict = {'boston_data': load_boston, 
-                'wine_data': load_wine,
-                'blood_transfusion_data': 'blood-transfusion-service-center',
-                'german_credit_data': 'credit-g'
-                }
-
-for name, loader in dataset_dict.items():
-    dataset = load_data(loader, False)
-    print(name)
-    source_factors = create_source_factors(dataset)
-    source, target = convert_to_strings(dataset)
-    
-    source, target, source_factors = shuffle_data(source, target, source_factors)
-        
-    create_files(source, target, source_factors, name)
-
-# create quadratic and linear numerical values with different noise factors
-noise_list = [0.001, 0.01, 0.1, 1]
-for noise in noise_list:
-    source, target, source_factors = create_numerical_data(noise=noise)
-    create_files(source, target, source_factors, 'quadratic_with_noise_{noise}'.format(noise=noise))
-
-for noise in noise_list:
-    source, target, source_factors = create_numerical_data(target_type='linear', noise=noise)
-    create_files(source, target, source_factors, 'linear_with_noise_{noise}'.format(noise=noise))
 
