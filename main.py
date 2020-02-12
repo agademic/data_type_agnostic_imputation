@@ -6,11 +6,11 @@ Created on Mon Feb 10 17:11:29 2020
 @author: a.gogohia
 """
 
-import os
+from pathlib import Path
 
-import numpy as np
-import pandas as pd
-import sklearn
+#import numpy as np
+#import pandas as pd
+#import sklearn
 from sklearn.datasets import (
     load_boston,
     load_wine,
@@ -44,8 +44,8 @@ and test set.
 
 """
 
-file_path = '/Users/a.gogohia/Documents/GitHub/data_type_agnostic_imputation/data'
-os.chdir(file_path)
+# file_path = Path('data')
+# os.chdir(file_path)
 
 dataset_dict = {
     'boston_data': load_boston, 
@@ -87,7 +87,8 @@ for name, loader in dataset_dict.items():
         source_factors = create_source_factors(training_set)
         source, target = convert_to_strings(training_set)
         source, target, source_factors = shuffle_data(source, target, source_factors)
-        file_name = str(name + '/' + miss_type)
+        #file_name = str(name + '/' + miss_type)
+        file_name = Path('data/' + str(name + '/' + miss_type))
         create_files(source, target, source_factors, file_dir=file_name)
         # write testing set
         source_factors = create_source_factors(test_set)
@@ -107,21 +108,19 @@ for target_type in parameters_syth_data['type']:
         source_factors = create_source_factors(training_set)
         source, target = convert_to_strings(training_set)
         source, target, source_factors = shuffle_data(source, target, source_factors)
-        file_name = str(target_type + '/' + miss_type)
+        #file_name = str(target_type + '/' + miss_type)
+        file_name = Path('data/' + str(target_type + '/' + miss_type))
         create_files(source, target, source_factors, file_dir=file_name, set_type='train')
         # write testing set
         source_factors = create_source_factors(test_set)
         source, target = convert_to_strings(test_set)
         create_files(source, target, source_factors, file_dir=file_name, set_type='test')
       
-source_factors = create_source_factors(test_set)
-source, target = convert_to_strings(test_set)
-create_files(source, target, source_factors, file_dir='test_data', set_type='test')
-noise_list = [0.001, 0.01, 0.1, 1]
-for noise in noise_list:
-    source, target, source_factors = create_numerical_data(noise=noise)
-    create_files(source, target, source_factors, 'quadratic_with_noise_{noise}'.format(noise=noise))
+# noise_list = [0.001, 0.01, 0.1, 1]
+# for noise in noise_list:
+#     source, target, source_factors = create_numerical_data(noise=noise)
+#     create_files(source, target, source_factors, 'quadratic_with_noise_{noise}'.format(noise=noise))
 
-for noise in noise_list:
-    source, target, source_factors = create_numerical_data(target_type='linear', noise=noise)
-    create_files(source, target, source_factors, 'linear_with_noise_{noise}'.format(noise=noise))
+# for noise in noise_list:
+#     source, target, source_factors = create_numerical_data(target_type='linear', noise=noise)
+#     create_files(source, target, source_factors, 'linear_with_noise_{noise}'.format(noise=noise))

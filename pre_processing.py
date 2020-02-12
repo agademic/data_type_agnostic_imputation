@@ -7,15 +7,11 @@ Created on Thu Jan 16 14:01:09 2020
 """
 
 import os
+
 import numpy as np
 import sklearn
 import pandas as pd
-from sklearn.datasets import (
-    load_boston,
-    load_wine,
-    )
 
-os.chdir('/Users/a.gogohia/Documents/GitHub/data_type_agnostic_imputation/data')
 
 def load_data(data_import, return_X_y=False):
     if return_X_y is True:
