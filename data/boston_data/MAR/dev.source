@@ -1,0 +1,46 @@
+<CRIM> 1 2 . 0 4 8 2 <ZN> 0 . 0 <INDUS> 1 8 . 1 <CHAS> 0 . 0 <NOX> 0 . 6 1 4 <RM> 5 . 6 4 8 <AGE> 8 7 . 6 <DIS> 1 . 9 5 1 2 <RAD> 2 4 . 0 <TAX> 6 6 6 . 0 <PTRATIO> 2 0 . 2 <B> 2 9 1 . 5 5 <LSTAT> 1 4 . 1
+<CRIM> 1 . 2 5 1 7 9 <ZN> 0 . 0 <INDUS> 8 . 1 4 <CHAS> 0 . 0 <NOX> 0 . 5 3 8 <RM> 5 . 5 7 <AGE> 9 8 . 1 <DIS> 3 . 7 9 7 9 <RAD> 4 . 0 <TAX> N <PTRATIO> 2 1 . 0 <B> 3 7 6 . 5 7 <LSTAT> 2 1 . 0 2
+<CRIM> 0 . 0 9 6 0 4 <ZN> 4 0 . 0 <INDUS> 6 . 4 1 <CHAS> 0 . 0 <NOX> 0 . 4 4 7 <RM> 6 . 8 5 4 <AGE> 4 2 . 8 <DIS> 4 . 2 6 7 3 <RAD> 4 . 0 <TAX> 2 5 4 . 0 <PTRATIO> 1 7 . 6 <B> 3 9 6 . 9 <LSTAT> 2 . 9 8
+<CRIM> N <ZN> 0 . 0 <INDUS> N <CHAS> 0 . 0 <NOX> 0 . 5 8 1 <RM> 5 . 9 6 1 <AGE> N <DIS> 2 . 0 8 6 9 <RAD> 2 . 0 <TAX> 1 8 8 . 0 <PTRATIO> 1 9 . 1 <B> 3 7 8 . 0 9 <LSTAT> 1 7 . 9 3
+<CRIM> 0 . 0 7 0 1 3 <ZN> 0 . 0 <INDUS> 1 3 . 8 9 <CHAS> 0 . 0 <NOX> 0 . 5 5 <RM> 6 . 6 4 2 <AGE> 8 5 . 1 <DIS> 3 . 4 2 1 1 <RAD> 5 . 0 <TAX> N <PTRATIO> 1 6 . 4 <B> 3 9 2 . 7 8 <LSTAT> 9 . 6 9
+<CRIM> 0 . 0 6 9 0 5 <ZN> 0 . 0 <INDUS> 2 . 1 8 <CHAS> 0 . 0 <NOX> 0 . 4 5 8 <RM> 7 . 1 4 7 <AGE> 5 4 . 2 <DIS> 6 . 0 6 2 2 <RAD> 3 . 0 <TAX> 2 2 2 . 0 <PTRATIO> 1 8 . 7 <B> 3 9 6 . 9 <LSTAT> 5 . 3 3
+<CRIM> 2 . 6 3 5 4 8 <ZN> 0 . 0 <INDUS> 9 . 9 <CHAS> N <NOX> 0 . 5 4 4 <RM> N <AGE> 3 7 . 8 <DIS> 2 . 5 1 9 4 <RAD> 4 . 0 <TAX> N <PTRATIO> 1 8 . 4 <B> 3 5 0 . 4 5 <LSTAT> 1 2 . 6 4
+<CRIM> 9 . 9 1 6 5 5 <ZN> 0 . 0 <INDUS> 1 8 . 1 <CHAS> 0 . 0 <NOX> 0 . 6 9 3 <RM> 5 . 8 5 2 <AGE> 7 7 . 8 <DIS> 1 . 5 0 0 4 <RAD> 2 4 . 0 <TAX> 6 6 6 . 0 <PTRATIO> 2 0 . 2 <B> 3 3 8 . 1 6 <LSTAT> 2 9 . 9 7
+<CRIM> 0 . 0 3 1 1 3 <ZN> N <INDUS> 4 . 3 9 <CHAS> 0 . 0 <NOX> 0 . 4 4 2 <RM> 6 . 0 1 4 <AGE> 4 8 . 5 <DIS> 8 . 0 1 3 6 <RAD> 3 . 0 <TAX> 3 5 2 . 0 <PTRATIO> 1 8 . 8 <B> 3 8 5 . 6 4 <LSTAT> N
+<CRIM> 1 5 . 1 7 7 2 <ZN> 0 . 0 <INDUS> 1 8 . 1 <CHAS> 0 . 0 <NOX> 0 . 7 4 <RM> 6 . 1 5 2 <AGE> 1 0 0 . 0 <DIS> 1 . 9 1 4 2 <RAD> 2 4 . 0 <TAX> 6 6 6 . 0 <PTRATIO> 2 0 . 2 <B> 9 . 3 2 <LSTAT> 2 6 . 4 5
+<CRIM> 0 . 2 0 7 4 6 <ZN> 0 . 0 <INDUS> 2 7 . 7 4 <CHAS> N <NOX> 0 . 6 0 9 <RM> 5 . 0 9 3 <AGE> 9 8 . 0 <DIS> 1 . 8 2 2 6 <RAD> 4 . 0 <TAX> 7 1 1 . 0 <PTRATIO> N <B> N <LSTAT> 2 9 . 6 8
+<CRIM> N <ZN> 0 . 0 <INDUS> 1 8 . 1 <CHAS> 0 . 0 <NOX> 0 . 7 7 <RM> 5 . 3 6 2 <AGE> 9 6 . 2 <DIS> 2 . 1 0 3 6 <RAD> 2 4 . 0 <TAX> 6 6 6 . 0 <PTRATIO> 2 0 . 2 <B> 3 8 0 . 7 9 <LSTAT> 1 0 . 1 9
+<CRIM> 2 . 7 7 9 7 4 <ZN> 0 . 0 <INDUS> N <CHAS> 0 . 0 <NOX> 0 . 8 7 1 <RM> 4 . 9 0 3 <AGE> 9 7 . 8 <DIS> 1 . 3 4 5 9 <RAD> 5 . 0 <TAX> 4 0 3 . 0 <PTRATIO> 1 4 . 7 <B> 3 9 6 . 9 <LSTAT> 2 9 . 2 9
+<CRIM> 1 . 3 5 4 7 2 <ZN> 0 . 0 <INDUS> 8 . 1 4 <CHAS> 0 . 0 <NOX> 0 . 5 3 8 <RM> 6 . 0 7 2 <AGE> 1 0 0 . 0 <DIS> 4 . 1 7 5 <RAD> 4 . 0 <TAX> 3 0 7 . 0 <PTRATIO> 2 1 . 0 <B> 3 7 6 . 7 3 <LSTAT> 1 3 . 0 4
+<CRIM> 4 . 0 3 8 4 1 <ZN> 0 . 0 <INDUS> 1 8 . 1 <CHAS> 0 . 0 <NOX> 0 . 5 3 2 <RM> N <AGE> 9 0 . 7 <DIS> 3 . 0 9 9 3 <RAD> N <TAX> 6 6 6 . 0 <PTRATIO> 2 0 . 2 <B> 3 9 5 . 3 3 <LSTAT> 1 2 . 8 7
+<CRIM> N <ZN> 0 . 0 <INDUS> 2 1 . 8 9 <CHAS> 0 . 0 <NOX> 0 . 6 2 4 <RM> 6 . 4 5 8 <AGE> 9 8 . 9 <DIS> 2 . 1 1 8 5 <RAD> 4 . 0 <TAX> 4 3 7 . 0 <PTRATIO> N <B> 3 9 5 . 0 4 <LSTAT> 1 2 . 6
+<CRIM> 0 . 0 3 7 3 8 <ZN> 0 . 0 <INDUS> 5 . 1 9 <CHAS> N <NOX> 0 . 5 1 5 <RM> 6 . 3 1 <AGE> 3 8 . 5 <DIS> 6 . 4 5 8 4 <RAD> 5 . 0 <TAX> 2 2 4 . 0 <PTRATIO> 2 0 . 2 <B> 3 8 9 . 4 <LSTAT> 6 . 7 5
+<CRIM> 2 5 . 0 4 6 1 <ZN> 0 . 0 <INDUS> 1 8 . 1 <CHAS> 0 . 0 <NOX> 0 . 6 9 3 <RM> 5 . 9 8 7 <AGE> 1 0 0 . 0 <DIS> 1 . 5 8 8 8 <RAD> 2 4 . 0 <TAX> 6 6 6 . 0 <PTRATIO> 2 0 . 2 <B> 3 9 6 . 9 <LSTAT> 2 6 . 7 7
+<CRIM> 0 . 0 3 3 0 6 <ZN> 0 . 0 <INDUS> 5 . 1 9 <CHAS> 0 . 0 <NOX> N <RM> 6 . 0 5 9 <AGE> 3 7 . 3 <DIS> 4 . 8 1 2 2 <RAD> N <TAX> 2 2 4 . 0 <PTRATIO> 2 0 . 2 <B> 3 9 6 . 1 4 <LSTAT> 8 . 5 1
+<CRIM> 7 . 6 7 2 0 2 <ZN> 0 . 0 <INDUS> 1 8 . 1 <CHAS> 0 . 0 <NOX> 0 . 6 9 3 <RM> 5 . 7 4 7 <AGE> 9 8 . 9 <DIS> 1 . 6 3 3 4 <RAD> 2 4 . 0 <TAX> 6 6 6 . 0 <PTRATIO> 2 0 . 2 <B> 3 9 3 . 1 <LSTAT> 1 9 . 9 2
+<CRIM> 0 . 0 9 1 0 3 <ZN> 0 . 0 <INDUS> N <CHAS> 0 . 0 <NOX> 0 . 4 8 8 <RM> 7 . 1 5 5 <AGE> 9 2 . 2 <DIS> 2 . 7 0 0 6 <RAD> 3 . 0 <TAX> 1 9 3 . 0 <PTRATIO> 1 7 . 8 <B> 3 9 4 . 1 2 <LSTAT> 4 . 8 2
+<CRIM> 0 . 7 5 0 2 6 <ZN> 0 . 0 <INDUS> 8 . 1 4 <CHAS> 0 . 0 <NOX> 0 . 5 3 8 <RM> 5 . 9 2 4 <AGE> 9 4 . 1 <DIS> 4 . 3 9 9 6 <RAD> 4 . 0 <TAX> N <PTRATIO> 2 1 . 0 <B> 3 9 4 . 3 3 <LSTAT> 1 6 . 3
+<CRIM> 1 . 4 2 5 0 2 <ZN> 0 . 0 <INDUS> 1 9 . 5 8 <CHAS> 0 . 0 <NOX> 0 . 8 7 1 <RM> 6 . 5 1 <AGE> 1 0 0 . 0 <DIS> N <RAD> 5 . 0 <TAX> 4 0 3 . 0 <PTRATIO> 1 4 . 7 <B> 3 6 4 . 3 1 <LSTAT> 7 . 3 9
+<CRIM> 0 . 0 8 1 8 7 <ZN> 0 . 0 <INDUS> 2 . 8 9 <CHAS> 0 . 0 <NOX> 0 . 4 4 5 <RM> 7 . 8 2 <AGE> 3 6 . 9 <DIS> 3 . 4 9 5 2 <RAD> 2 . 0 <TAX> 2 7 6 . 0 <PTRATIO> 1 8 . 0 <B> 3 9 3 . 5 3 <LSTAT> 3 . 5 7
+<CRIM> 2 2 . 0 5 1 1 <ZN> 0 . 0 <INDUS> 1 8 . 1 <CHAS> 0 . 0 <NOX> 0 . 7 4 <RM> 5 . 8 1 8 <AGE> 9 2 . 4 <DIS> 1 . 8 6 6 2 <RAD> 2 4 . 0 <TAX> 6 6 6 . 0 <PTRATIO> 2 0 . 2 <B> 3 9 1 . 4 5 <LSTAT> 2 2 . 1 1
+<CRIM> 0 . 0 5 3 6 <ZN> 2 1 . 0 <INDUS> 5 . 6 4 <CHAS> 0 . 0 <NOX> 0 . 4 3 9 <RM> 6 . 5 1 1 <AGE> 2 1 . 1 <DIS> 6 . 8 1 4 7 <RAD> 4 . 0 <TAX> 2 4 3 . 0 <PTRATIO> 1 6 . 8 <B> 3 9 6 . 9 <LSTAT> N
+<CRIM> 9 . 5 9 5 7 1 <ZN> 0 . 0 <INDUS> 1 8 . 1 <CHAS> 0 . 0 <NOX> 0 . 6 9 3 <RM> 6 . 4 0 4 <AGE> 1 0 0 . 0 <DIS> 1 . 6 3 9 <RAD> 2 4 . 0 <TAX> 6 6 6 . 0 <PTRATIO> 2 0 . 2 <B> 3 7 6 . 1 1 <LSTAT> 2 0 . 3 1
+<CRIM> 0 . 3 2 5 4 3 <ZN> 0 . 0 <INDUS> 2 1 . 8 9 <CHAS> 0 . 0 <NOX> 0 . 6 2 4 <RM> 6 . 4 3 1 <AGE> 9 8 . 8 <DIS> 1 . 8 1 2 5 <RAD> 4 . 0 <TAX> 4 3 7 . 0 <PTRATIO> N <B> 3 9 6 . 9 <LSTAT> 1 5 . 3 9
+<CRIM> 1 1 . 0 8 7 4 <ZN> 0 . 0 <INDUS> 1 8 . 1 <CHAS> 0 . 0 <NOX> 0 . 7 1 8 <RM> 6 . 4 1 1 <AGE> 1 0 0 . 0 <DIS> 1 . 8 5 8 9 <RAD> 2 4 . 0 <TAX> 6 6 6 . 0 <PTRATIO> 2 0 . 2 <B> 3 1 8 . 7 5 <LSTAT> 1 5 . 0 2
+<CRIM> N <ZN> N <INDUS> 3 . 9 7 <CHAS> 0 . 0 <NOX> 0 . 6 4 7 <RM> 7 . 2 0 3 <AGE> 8 1 . 8 <DIS> 2 . 1 1 2 1 <RAD> 5 . 0 <TAX> 2 6 4 . 0 <PTRATIO> 1 3 . 0 <B> 3 9 2 . 8 <LSTAT> 9 . 5 9
+<CRIM> 0 . 0 1 9 5 1 <ZN> 1 7 . 5 <INDUS> 1 . 3 8 <CHAS> 0 . 0 <NOX> N <RM> 7 . 1 0 4 <AGE> 5 9 . 5 <DIS> 9 . 2 2 2 9 <RAD> 3 . 0 <TAX> 2 1 6 . 0 <PTRATIO> 1 8 . 6 <B> 3 9 3 . 2 4 <LSTAT> N
+<CRIM> 2 . 1 5 5 0 5 <ZN> 0 . 0 <INDUS> 1 9 . 5 8 <CHAS> 0 . 0 <NOX> 0 . 8 7 1 <RM> 5 . 6 2 8 <AGE> 1 0 0 . 0 <DIS> 1 . 5 1 6 6 <RAD> 5 . 0 <TAX> 4 0 3 . 0 <PTRATIO> 1 4 . 7 <B> 1 6 9 . 2 7 <LSTAT> 1 6 . 6 5
+<CRIM> 0 . 7 7 2 9 9 <ZN> 0 . 0 <INDUS> 8 . 1 4 <CHAS> 0 . 0 <NOX> 0 . 5 3 8 <RM> 6 . 4 9 5 <AGE> 9 4 . 4 <DIS> 4 . 4 5 4 7 <RAD> 4 . 0 <TAX> N <PTRATIO> 2 1 . 0 <B> 3 8 7 . 9 4 <LSTAT> 1 2 . 8
+<CRIM> 0 . 0 5 3 7 2 <ZN> 0 . 0 <INDUS> 1 3 . 9 2 <CHAS> 0 . 0 <NOX> 0 . 4 3 7 <RM> N <AGE> 5 1 . 0 <DIS> 5 . 9 6 0 4 <RAD> 4 . 0 <TAX> 2 8 9 . 0 <PTRATIO> 1 6 . 0 <B> 3 9 2 . 8 5 <LSTAT> 7 . 3 9
+<CRIM> N <ZN> 0 . 0 <INDUS> 1 8 . 1 <CHAS> 0 . 0 <NOX> 0 . 7 <RM> 6 . 0 5 1 <AGE> 8 2 . 5 <DIS> N <RAD> 2 4 . 0 <TAX> 6 6 6 . 0 <PTRATIO> 2 0 . 2 <B> 3 7 8 . 3 8 <LSTAT> 1 8 . 7 6
+<CRIM> 4 5 . 7 4 6 1 <ZN> 0 . 0 <INDUS> 1 8 . 1 <CHAS> 0 . 0 <NOX> 0 . 6 9 3 <RM> 4 . 5 1 9 <AGE> 1 0 0 . 0 <DIS> 1 . 6 5 8 2 <RAD> 2 4 . 0 <TAX> 6 6 6 . 0 <PTRATIO> 2 0 . 2 <B> 8 8 . 2 7 <LSTAT> 3 6 . 9 8
+<CRIM> 0 . 1 4 8 6 6 <ZN> 0 . 0 <INDUS> 8 . 5 6 <CHAS> 0 . 0 <NOX> 0 . 5 2 <RM> 6 . 7 2 7 <AGE> 7 9 . 9 <DIS> 2 . 7 7 7 8 <RAD> 5 . 0 <TAX> 3 8 4 . 0 <PTRATIO> 2 0 . 9 <B> 3 9 4 . 7 6 <LSTAT> 9 . 4 2
+<CRIM> N <ZN> N <INDUS> 3 . 9 7 <CHAS> 0 . 0 <NOX> 0 . 6 4 7 <RM> 7 . 0 1 4 <AGE> 8 4 . 6 <DIS> 2 . 1 3 2 9 <RAD> 5 . 0 <TAX> 2 6 4 . 0 <PTRATIO> 1 3 . 0 <B> 3 8 4 . 0 7 <LSTAT> 1 4 . 7 9
+<CRIM> 0 . 0 8 0 1 4 <ZN> 0 . 0 <INDUS> 5 . 9 6 <CHAS> 0 . 0 <NOX> N <RM> 5 . 8 5 <AGE> N <DIS> 3 . 9 3 4 2 <RAD> 5 . 0 <TAX> 2 7 9 . 0 <PTRATIO> 1 9 . 2 <B> 3 9 6 . 9 <LSTAT> 8 . 7 7
+<CRIM> N <ZN> 0 . 0 <INDUS> 1 8 . 1 <CHAS> 0 . 0 <NOX> 0 . 7 4 <RM> 6 . 3 4 1 <AGE> 9 6 . 4 <DIS> 2 . 0 7 2 <RAD> 2 4 . 0 <TAX> 6 6 6 . 0 <PTRATIO> 2 0 . 2 <B> 3 1 8 . 0 1 <LSTAT> 1 7 . 7 9
+<CRIM> 0 . 1 0 6 5 9 <ZN> 8 0 . 0 <INDUS> 1 . 9 1 <CHAS> 0 . 0 <NOX> 0 . 4 1 3 <RM> 5 . 9 3 6 <AGE> 1 9 . 5 <DIS> 1 0 . 5 8 5 7 <RAD> 4 . 0 <TAX> 3 3 4 . 0 <PTRATIO> 2 2 . 0 <B> 3 7 6 . 0 4 <LSTAT> 5 . 5 7
+<CRIM> N <ZN> N <INDUS> 3 . 9 7 <CHAS> 0 . 0 <NOX> 0 . 6 4 7 <RM> 7 . 5 2 <AGE> 8 9 . 4 <DIS> 2 . 1 3 9 8 <RAD> 5 . 0 <TAX> 2 6 4 . 0 <PTRATIO> 1 3 . 0 <B> 3 8 8 . 3 7 <LSTAT> 7 . 2 6
+<CRIM> 0 . 0 4 0 1 1 <ZN> 8 0 . 0 <INDUS> 1 . 5 2 <CHAS> 0 . 0 <NOX> 0 . 4 0 4 <RM> 7 . 2 8 7 <AGE> 3 4 . 1 <DIS> 7 . 3 0 9 <RAD> 2 . 0 <TAX> 3 2 9 . 0 <PTRATIO> 1 2 . 6 <B> 3 9 6 . 9 <LSTAT> N
+<CRIM> 0 . 0 4 3 0 1 <ZN> 8 0 . 0 <INDUS> 1 . 9 1 <CHAS> 0 . 0 <NOX> N <RM> 5 . 6 6 3 <AGE> 2 1 . 9 <DIS> 1 0 . 5 8 5 7 <RAD> 4 . 0 <TAX> 3 3 4 . 0 <PTRATIO> 2 2 . 0 <B> 3 8 2 . 8 <LSTAT> 8 . 0 5
+<CRIM> 0 . 3 7 5 7 8 <ZN> 0 . 0 <INDUS> 1 0 . 5 9 <CHAS> 1 . 0 <NOX> 0 . 4 8 9 <RM> 5 . 4 0 4 <AGE> 8 8 . 6 <DIS> 3 . 6 6 5 <RAD> N <TAX> 2 7 7 . 0 <PTRATIO> 1 8 . 6 <B> 3 9 5 . 2 4 <LSTAT> 2 3 . 9 8
+<CRIM> 0 . 0 6 1 2 7 <ZN> 4 0 . 0 <INDUS> 6 . 4 1 <CHAS> 1 . 0 <NOX> 0 . 4 4 7 <RM> 6 . 8 2 6 <AGE> 2 7 . 6 <DIS> 4 . 8 6 2 8 <RAD> 4 . 0 <TAX> 2 5 4 . 0 <PTRATIO> 1 7 . 6 <B> 3 9 3 . 4 5 <LSTAT> 4 . 1 6

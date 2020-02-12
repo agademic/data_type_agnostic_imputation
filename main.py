@@ -39,7 +39,7 @@ and test set.
     a. Set target column for training and testing.
 4. Generate source factors for datasets.
 5. Convert dataset values to strings (convert_to_strings).
-6. Create files for training, validation and testing.
+6. Create files for training, validation and testing (create_files(set_type="train" or "test")).
 7. Run model data preparation and training file.
 
 """
@@ -83,14 +83,16 @@ for name, loader in dataset_dict.items():
         print(miss_type)
         mask = generate_missing_mask(dataset, missingness=miss_type)
         training_set, test_set = generate_missingness(dataset, mask)
-        
+        # write training set
         source_factors = create_source_factors(training_set)
         source, target = convert_to_strings(training_set)
-        
         source, target, source_factors = shuffle_data(source, target, source_factors)
-        
         file_name = str(name + '/' + miss_type)
         create_files(source, target, source_factors, file_dir=file_name)
+        # write testing set
+        source_factors = create_source_factors(test_set)
+        source, target = convert_to_strings(test_set)
+        create_files(source, target, source_factors, file_dir=file_name, set_type='test')
 
 # create quadratic and linear numerical values with different noise factors
 
@@ -101,16 +103,20 @@ for target_type in parameters_syth_data['type']:
         print(miss_type)
         mask = generate_missing_mask(dataset, missingness=miss_type)
         training_set, test_set = generate_missingness(dataset, mask)
-        
+        # write training set
         source_factors = create_source_factors(training_set)
         source, target = convert_to_strings(training_set)
-        
         source, target, source_factors = shuffle_data(source, target, source_factors)
-        
         file_name = str(target_type + '/' + miss_type)
-        create_files(source, target, source_factors, file_dir=file_name)
+        create_files(source, target, source_factors, file_dir=file_name, set_type='train')
+        # write testing set
+        source_factors = create_source_factors(test_set)
+        source, target = convert_to_strings(test_set)
+        create_files(source, target, source_factors, file_dir=file_name, set_type='test')
       
-        
+source_factors = create_source_factors(test_set)
+source, target = convert_to_strings(test_set)
+create_files(source, target, source_factors, file_dir='test_data', set_type='test')
 noise_list = [0.001, 0.01, 0.1, 1]
 for noise in noise_list:
     source, target, source_factors = create_numerical_data(noise=noise)

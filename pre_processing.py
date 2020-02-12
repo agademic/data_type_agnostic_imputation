@@ -121,7 +121,7 @@ def generate_missingness(dataset, mask, target_column=-1, nan_value='N'):
     df_dropped = df_test.drop(df_test.columns[target_column], axis=1)
     dataset_test = sklearn.utils.Bunch(data=np.array(df_dropped).reshape(-1, shape[1]).reshape(-1, shape[1]),
                                        feature_names=dataset.feature_names,
-                                       target=np.array(df_test.iloc[:,target_column]))
+                                       target=np.array(df.iloc[df_test.index, target_column]))
 
     return dataset_source, dataset_test
 
@@ -227,7 +227,7 @@ def create_numerical_data(num_samples = 10000,
         
     return dataset
 
-def create_files(source, target, source_factors, file_dir, num_dev=0.1):
+def create_files(source, target, source_factors, file_dir, num_dev=0.1, set_type='train'):
     """
     Function to create input files for the sockeye model. It takes the datasets
     as input and creates distinct training and test files for source, target 
@@ -252,46 +252,72 @@ def create_files(source, target, source_factors, file_dir, num_dev=0.1):
 
     """
     
-    num_samples = len(source)
-    num_dev = round(num_samples*num_dev)
-    
-    # split training and validation data
-    train_samples = source[:num_samples-num_dev] # training source data
-    dev_samples = source[num_samples-num_dev:] # validation source data
-    
-    train_target = target[:num_samples-num_dev] # training target data
-    dev_target = target[num_samples-num_dev:] # validation target data
-    
-    train_source_factors = source_factors[:num_samples-num_dev] # training source factors
-    dev_source_factors = source_factors[num_samples-num_dev:] # validation target factors
-    
-    
-    file_dir=str(file_dir)
-    # write files
-    if not os.path.exists(file_dir):
-        os.makedirs(file_dir)
+    if set_type == 'train':
+        num_samples = len(source)
+        num_dev = round(num_samples*num_dev)
+        
+        # split training and validation data
+        train_samples = source[:num_samples-num_dev] # training source data
+        dev_samples = source[num_samples-num_dev:] # validation source data
+        
+        train_target = target[:num_samples-num_dev] # training target data
+        dev_target = target[num_samples-num_dev:] # validation target data
+        
+        train_source_factors = source_factors[:num_samples-num_dev] # training source factors
+        dev_source_factors = source_factors[num_samples-num_dev:] # validation target factors
+        
+        
+        file_dir=str(file_dir)
+        # write files
+        if not os.path.exists(file_dir):
+            os.makedirs(file_dir)
+                
+        with open("{}/train.source".format(file_dir), "w") as source1:
+            for sample in train_samples:
+                source1.write(sample + "\n")
+        
+        with open("{}/train.target".format(file_dir), "w") as target1:
+            for sample in train_target:
+                target1.write(sample + "\n")
+                
+        with open("{}/dev.source".format(file_dir), "w") as source1:
+            for sample in dev_samples:
+                source1.write(sample + "\n")
+        
+        with open("{}/dev.target".format(file_dir), "w") as target1:
+            for sample in dev_target:
+                target1.write(sample + "\n")
+                
+        with open("{}/train.source_factors".format(file_dir), "w") as source_f1:
+            for sample in train_source_factors:
+                source_f1.write(sample + "\n")
+                
+        with open("{}/dev.source_factors".format(file_dir), "w") as source_f1:
+            for sample in dev_source_factors:
+                source_f1.write(sample + "\n")
+                
+    elif set_type == 'test':
+        test_samples = source
+        test_target = target
+        test_source_factors = source_factors
+        
+        file_dir = str(file_dir)
+        # write files
+        if not os.path.exists(file_dir):
+            os.makedirs(file_dir)
             
-    with open("{}/train.source".format(file_dir), "w") as source1:
-        for sample in train_samples:
-            source1.write(sample + "\n")
-    
-    with open("{}/train.target".format(file_dir), "w") as target1:
-        for sample in train_target:
-            target1.write(sample + "\n")
-            
-    with open("{}/dev.source".format(file_dir), "w") as source1:
-        for sample in dev_samples:
-            source1.write(sample + "\n")
-    
-    with open("{}/dev.target".format(file_dir), "w") as target1:
-        for sample in dev_target:
-            target1.write(sample + "\n")
-            
-    with open("{}/train.source_factors".format(file_dir), "w") as source_f1:
-        for sample in train_source_factors:
-            source_f1.write(sample + "\n")
-            
-    with open("{}/dev.source_factors".format(file_dir), "w") as source_f1:
-        for sample in dev_source_factors:
-            source_f1.write(sample + "\n")
+        with open("{}/test.source".format(file_dir), "w") as source1:
+            for sample in test_samples:
+                source1.write(sample + "\n")
+                
+        with open("{}/test.target".format(file_dir), "w") as target1:
+            for sample in test_target:
+                target1.write(sample + "\n")
+                
+        with open("{}/test.source_factors".format(file_dir), "w") as source_f1:
+            for sample in test_source_factors:
+                source_f1.write(sample + "\n")
+        
+    else:
+        print('Please specify the dataset type: "train" or "test".')
 
