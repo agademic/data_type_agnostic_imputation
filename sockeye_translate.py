@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Mon Jan 27 18:45:08 2020
+Created on Wed Feb 12 14:53:19 2020
 
 @author: a.gogohia
 """
+
 
 import os
 import subprocess
@@ -18,7 +19,7 @@ for dataset in datasets:
         print(types)
         for typ in types:
             try:
-                command_prepr = 'python -m sockeye.prepare_data -s {name}/train.source -t {name}/train.target -sf {name}/train.source_factors -o {name}/prepared_sockeye_data'.format(name=typ)
+                command_prepr = 'python -m sockeye.translate -m {name}/sockeye_model_large -i {name}/test.source -if {name}/test.source_factors --use-cpu -o {name}/translated_data'.format(name=typ)
                 print(command_prepr)
                 process = subprocess.Popen(command_prepr.split(), stdout=subprocess.PIPE)
                 output, error = process.communicate()

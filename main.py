@@ -44,8 +44,58 @@ and test set.
 
 """
 
-# file_path = Path('data')
-# os.chdir(file_path)
+# dataset = load_data(load_boston)
+# dataset = load_boston()
+# mask = generate_missing_mask(dataset)
+# t, t1 = generate_missingness(dataset, mask)
+# dataset = create_numerical_data()
+# mask = generate_missing_mask(dataset)
+
+# dataset = load_data('blood-transfusion-service-center')
+# mask = generate_missing_mask(dataset)
+# t, t1 = generate_missingness(dataset, mask)
+
+def data_setup():
+    # load real world datassets
+    for name, loader in dataset_dict.items():
+        dataset = load_data(loader, False)
+        print(name)
+        for miss_type in missingness['missingness_type']:
+            print(miss_type)
+            mask = generate_missing_mask(dataset, missingness=miss_type)
+            training_set, test_set = generate_missingness(dataset, mask)
+            # write training set
+            source_factors = create_source_factors(training_set)
+            source, target = convert_to_strings(training_set)
+            source, target, source_factors = shuffle_data(source, target, source_factors)
+            #file_name = str(name + '/' + miss_type)
+            file_name = Path('data/' + str(name + '/' + miss_type))
+            create_files(source, target, source_factors, file_dir=file_name)
+            # write testing set
+            source_factors = create_source_factors(test_set)
+            source, target = convert_to_strings(test_set)
+            create_files(source, target, source_factors, file_dir=file_name, set_type='test')
+    
+    # create quadratic and linear numerical values with different noise factors
+    
+    for target_type in parameters_syth_data['type']:
+        print(target_type)
+        dataset = create_numerical_data(target_type=target_type)
+        for miss_type in missingness['missingness_type']:
+            print(miss_type)
+            mask = generate_missing_mask(dataset, missingness=miss_type)
+            training_set, test_set = generate_missingness(dataset, mask)
+            # write training set
+            source_factors = create_source_factors(training_set)
+            source, target = convert_to_strings(training_set)
+            source, target, source_factors = shuffle_data(source, target, source_factors)
+            #file_name = str(target_type + '/' + miss_type)
+            file_name = Path('data/' + str(target_type + '/' + miss_type))
+            create_files(source, target, source_factors, file_dir=file_name, set_type='train')
+            # write testing set
+            source_factors = create_source_factors(test_set)
+            source, target = convert_to_strings(test_set)
+            create_files(source, target, source_factors, file_dir=file_name, set_type='test')
 
 dataset_dict = {
     'boston_data': load_boston, 
@@ -64,58 +114,7 @@ missingness = {
     'missingness_type': ['MCAR', 'MAR', 'MNAR'],
     'missingness_percent': [10, 30]}
 
-dataset = load_data(load_boston)
-dataset = load_boston()
-mask = generate_missing_mask(dataset)
-t, t1 = generate_missingness(dataset, mask)
-dataset = create_numerical_data()
-mask = generate_missing_mask(dataset)
-
-dataset = load_data('blood-transfusion-service-center')
-mask = generate_missing_mask(dataset)
-t, t1 = generate_missingness(dataset, mask)
-
-# load real world datassets
-for name, loader in dataset_dict.items():
-    dataset = load_data(loader, False)
-    print(name)
-    for miss_type in missingness['missingness_type']:
-        print(miss_type)
-        mask = generate_missing_mask(dataset, missingness=miss_type)
-        training_set, test_set = generate_missingness(dataset, mask)
-        # write training set
-        source_factors = create_source_factors(training_set)
-        source, target = convert_to_strings(training_set)
-        source, target, source_factors = shuffle_data(source, target, source_factors)
-        #file_name = str(name + '/' + miss_type)
-        file_name = Path('data/' + str(name + '/' + miss_type))
-        create_files(source, target, source_factors, file_dir=file_name)
-        # write testing set
-        source_factors = create_source_factors(test_set)
-        source, target = convert_to_strings(test_set)
-        create_files(source, target, source_factors, file_dir=file_name, set_type='test')
-
-# create quadratic and linear numerical values with different noise factors
-
-for target_type in parameters_syth_data['type']:
-    print(target_type)
-    dataset = create_numerical_data(target_type=target_type)
-    for miss_type in missingness['missingness_type']:
-        print(miss_type)
-        mask = generate_missing_mask(dataset, missingness=miss_type)
-        training_set, test_set = generate_missingness(dataset, mask)
-        # write training set
-        source_factors = create_source_factors(training_set)
-        source, target = convert_to_strings(training_set)
-        source, target, source_factors = shuffle_data(source, target, source_factors)
-        #file_name = str(target_type + '/' + miss_type)
-        file_name = Path('data/' + str(target_type + '/' + miss_type))
-        create_files(source, target, source_factors, file_dir=file_name, set_type='train')
-        # write testing set
-        source_factors = create_source_factors(test_set)
-        source, target = convert_to_strings(test_set)
-        create_files(source, target, source_factors, file_dir=file_name, set_type='test')
-      
+data_setup()
 # noise_list = [0.001, 0.01, 0.1, 1]
 # for noise in noise_list:
 #     source, target, source_factors = create_numerical_data(noise=noise)
