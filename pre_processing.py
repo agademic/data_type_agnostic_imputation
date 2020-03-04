@@ -17,7 +17,6 @@ def load_data(data_import, return_X_y=False):
     if return_X_y is True:
         try:
             X, y = data_import(return_X_y=True)
-
         except:
             X, y = sklearn.datasets.fetch_openml(str(data_import), return_X_y=True)
         return X, y
@@ -104,9 +103,9 @@ def generate_missingness(dataset, mask, target_column=-1, nan_value='N'):
     df_nans = df[~mask]
     #df_source = df_nans[np.isfinite(df_nans.iloc[:,target_column])]
     df_source = df_nans[~df_nans.iloc[:,target_column].isnull()]
-    df_source.fillna(nan_value, inplace=True)
+    #df_source.fillna(nan_value, inplace=True)
     df_test = df_nans.drop(df_source.index)
-    df_test.fillna(nan_value, inplace=True)
+    #df_test.fillna(nan_value, inplace=True)
     # create bunch objects
     shape = dataset.data.shape
     df_dropped = df_source.drop(df_source.columns[target_column], axis=1)
