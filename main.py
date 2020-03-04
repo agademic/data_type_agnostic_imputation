@@ -25,6 +25,7 @@ from pre_processing import (
     shuffle_data,
     create_numerical_data,
     create_files)
+from sklearn_imputation import sklearn_impute
 
 """
 Top main file for setting the parameters for the experiment.
@@ -56,6 +57,7 @@ and test set.
 # t, t1 = generate_missingness(dataset, mask)
 
 def data_setup():
+    
     # load real world datassets
     for name, loader in dataset_dict.items():
         dataset = load_data(loader, False)
@@ -70,14 +72,16 @@ def data_setup():
             source, target, source_factors = shuffle_data(source, target, source_factors)
             #file_name = str(name + '/' + miss_type)
             file_name = Path('data/' + str(name + '/' + miss_type))
-            create_files(source, target, source_factors, file_dir=file_name)
+            create_files(source, target, source_factors, file_dir=file_name, set_type='train')
             # write testing set
             source_factors = create_source_factors(test_set)
             source, target = convert_to_strings(test_set)
             create_files(source, target, source_factors, file_dir=file_name, set_type='test')
+            # compute mse using imputation methods and save file
+            imputation_scores = sklearn_impute(training_set, test_set)
+            imputation_scores.to_pickle(Path(file_name.__str__() + 'imputation_score.pkl'))
     
     # create quadratic and linear numerical values with different noise factors
-    
     for target_type in parameters_syth_data['type']:
         print(target_type)
         dataset = create_numerical_data(target_type=target_type)
@@ -96,6 +100,9 @@ def data_setup():
             source_factors = create_source_factors(test_set)
             source, target = convert_to_strings(test_set)
             create_files(source, target, source_factors, file_dir=file_name, set_type='test')
+            # compute mse using imputation methods and save file          
+            imputation_scores = sklearn_impute(training_set, test_set)
+            imputation_scores.to_pickle(Path(file_name.__str__() + 'imputation_score.pkl'))
 
 dataset_dict = {
     'boston_data': load_boston, 
