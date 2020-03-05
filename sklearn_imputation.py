@@ -19,12 +19,10 @@ from sklearn.experimental import enable_iterative_imputer
 from sklearn.impute import IterativeImputer
 from sklearn.model_selection import GridSearchCV
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.linear_model import LinearRegression
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.impute import SimpleImputer
+from sklearn.pipeline import make_pipeline
 from sklearn.linear_model import BayesianRidge
-from sklearn.tree import DecisionTreeRegressor
-from sklearn.ensemble import ExtraTreesRegressor
-from sklearn.neighbors import KNeighborsRegressor
-from sklearn.preprocessing import LabelEncoder
 
 from pre_processing import (
     load_data,
@@ -36,7 +34,7 @@ from pre_processing import (
     create_numerical_data,
     create_files)
 
-def sklearn_impute(training_set, test_set):
+def sklearn_impute(training_set, test_set, name='dataset_name'):
     """
     Function to impute missing values in a specified column in a given target
     data set. Function takes a training set with no missing values in specififed
@@ -62,38 +60,59 @@ def sklearn_impute(training_set, test_set):
 
     """
     estimators = [
-    BayesianRidge(),
-    DecisionTreeRegressor(max_features='sqrt', random_state=0),
-    ExtraTreesRegressor(n_estimators=10, random_state=0),
-    KNeighborsRegressor(n_neighbors=15),
-    LinearRegression(),
+    #KNeighborsRegressor(n_neighbors=15),
     RandomForestRegressor(random_state=0)
     ]
     
     
     training_set = np.concatenate([training_set.data, training_set.target.reshape(-1,1)], axis=1)
     test_set = np.concatenate([test_set.data, test_set.target.reshape(-1,1)], axis=1)
-    test_set_missing = test_set.copy() 
-    test_set_missing[:,-1].fill(np.nan) # set last column to nan
-    if type(training_set[0,-1]) == str:
-        le = LabelEncoder()
-        training_set[:,-1] = le.fit_transform(training_set[:,-1])
-        test_set[:,-1] = le.fit_transform(test_set[:,-1])
-    
-    
-    score_iterative_imputer = pd.DataFrame()
-    for estimator in estimators:
+    test_set_labels = test_set[:,-1].copy() 
+    test_set[:,-1].fill(np.nan) # set last column to nan
+    if len(np.unique(training_set[:,-1])) < 20: # check if target column categorical
+        # score = pd.DataFrame()
+        # encode categorical values
+        # le = LabelEncoder()
+        # training_set[:,-1] = le.fit_transform(training_set[:,-1])
+        # test_set[:,-1] = le.fit_transform(test_set[:,-1])
+        # first impute all missing values in X with SimpleImputer
+        imp = SimpleImputer(missing_values=np.nan, strategy='mean')
+        imp.fit(training_set[:,:-1])
+        training_set[:,:-1] = imp.transform(training_set[:,:-1])
+        imp.fit(test_set[:,:-1])
+        test_set[:,:-1] = imp.transform(test_set[:,:-1])
+        # now apply classifier on imputed dataset
+        clf = RandomForestClassifier()
+        # perform grid search for classifier
+        parameters = {
+        'n_estimators': [2, 10, 100],
+        'max_features': [int(np.sqrt(training_set[:,:-1].shape[-1])), training_set[:,:-1].shape[-1]]
+                }
+        clf = GridSearchCV(RandomForestClassifier(), parameters, cv=5)
+        clf.fit(training_set[:,:-1], training_set[:,-1])
+        test_set[:,-1] = clf.predict(test_set[:,:-1])
+        # compute score
+        score = ['Accuracy: ', clf.score(test_set[:,:-1], test_set_labels)] 
+        
+    else:
+        # score = pd.DataFrame()
         # train imputer model on training set
-        imp = IterativeImputer(estimator=estimator, random_state=0) # choose method
+        #est = RandomForestRegressor(random_state=0)        
+        parameters = {
+        'n_estimators': [2, 10, 100],
+        'max_features': [int(np.sqrt(training_set[:,:-1].shape[-1])), training_set[:,:-1].shape[-1]]
+                }
+        est = GridSearchCV(RandomForestRegressor(random_state=0), parameters, cv=5)
+        imp = IterativeImputer(estimator=est, random_state=0) # choose method
         imp.fit(training_set) # fit on training data
-        y_pred = imp.transform(test_set_missing) # impute test data
-        score_iterative_imputer[estimator.__class__.__name__] = [mse(test_set[:,-1], y_pred[:,-1])]
+        y_pred = imp.transform(test_set) # impute test data
+        score = ['MSE: ', mse(test_set_labels, y_pred[:,-1])]
         # result = [
         #     'estimator', f'{estimator}',
         #     'mse', mse(test_set[:,-1], y_pred[:,-1])]
         # results.append(result)
     
-    return score_iterative_imputer
+    return score
 
 # dataset = load_boston(return_X_y=False)
 # mask = generate_missing_mask(dataset, missingness='MAR')
@@ -101,6 +120,8 @@ def sklearn_impute(training_set, test_set):
 
 # mse_score = sklearn_impute(training_set, test_set)
 
-# dataset = sklearn.datasets.fetch_openml('blood-transfusion-service-center', return_X_y=False)
-# mask = generate_missing_mask(dataset, missingness='MAR')
-# training_set, test_set = generate_missingness(dataset, mask)
+dataset = load_boston()
+mask = generate_missing_mask(dataset, missingness='MAR')
+training_set, test_set = generate_missingness(dataset, mask)
+
+
