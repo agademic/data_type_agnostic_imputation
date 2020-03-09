@@ -68,7 +68,7 @@ def data_setup():
             print(miss_type)
             for miss_percent in missingness['missingness_percent']:
                 print(miss_percent)
-                mask = generate_missing_mask(dataset, missingness=miss_type)
+                mask = generate_missing_mask(dataset, percent_missing=miss_percent, missingness=miss_type)
                 training_set, test_set = generate_missingness(dataset, mask)
                 # write training set
                 source_factors = create_source_factors(training_set)
@@ -94,7 +94,7 @@ def data_setup():
             print(miss_type)
             for miss_percent in missingness['missingness_percent']:
                 print(miss_percent)
-                mask = generate_missing_mask(dataset, missingness=miss_type)
+                mask = generate_missing_mask(dataset, percent_missing=miss_percent, missingness=miss_type)
                 training_set, test_set = generate_missingness(dataset, mask)
                 # write training set
                 source_factors = create_source_factors(training_set)
@@ -112,7 +112,10 @@ def data_setup():
                 imputation_scores.append(scores)
                 #imputation_scores.to_pickle(Path(file_name.__str__() + 'imputation_score.pkl'))
                 print(imputation_scores)
-    return imputation_scores
+    
+    with open('scores.txt', 'w') as f:
+        for item in scores:
+            f.write("%s\n" % item)
 
 dataset_dict = {
     'boston_data': load_boston, 
@@ -131,7 +134,7 @@ missingness = {
     'missingness_type': ['MCAR', 'MAR', 'MNAR'],
     'missingness_percent': [10, 30]}
 
-test = data_setup()
+data_setup()
 # noise_list = [0.001, 0.01, 0.1, 1]
 # for noise in noise_list:
 #     source, target, source_factors = create_numerical_data(noise=noise)

@@ -14,16 +14,21 @@ os.chdir('data')
 datasets = os.listdir()
 
 for dataset in datasets:
+    print(dataset)
     try:
         types = os.listdir(str(dataset))
-        print(types)
         for typ in types:
-            try:
-                command_prepr = 'python -m sockeye.translate -m {name}/sockeye_model_large -i {name}/test.source -if {name}/test.source_factors --use-cpu -o {name}/translated_data'.format(name=typ)
-                print(command_prepr)
-                process = subprocess.Popen(command_prepr.split(), stdout=subprocess.PIPE)
-                output, error = process.communicate()
-            except:
-                continue
+            print(typ)
+            if not typ.startswith('.'): # ignore hidden folders
+                missingness = os.listdir(str(dataset) + '/' + str(typ))
+                for miss in missingness:
+                    print(miss)
+                    try:
+                        command_prepr = f'python -m sockeye.translate -m {dataset}/{typ}/{miss}/sockeye_model_large -i {dataset}/{typ}/{miss}/test.source -if {dataset}/{typ}/{miss}/test.source_factors --use-cpu -o {dataset}/{typ}/{miss}/translated_data'
+                        print(command_prepr)
+                        process = subprocess.Popen(command_prepr.split(), stdout=subprocess.PIPE)
+                        output, error = process.communicate()
+                    except:
+                        continue
     except:
         continue
