@@ -34,7 +34,10 @@ def open_list(filename):
         
     translated_list = []
     for i in range(len(opened_list)):
-        translated_list.append(float(t1[i].replace(' ', '')))
+        try:
+            translated_list.append(float(t1[i].replace(' ', '')))
+        except:
+            translated_list.append(t1[i].replace(' ', ''))
         
     return translated_list
 
@@ -88,7 +91,7 @@ def progress_mse(directory, target):
         mse_list.append(MSE)
     return mse_list
 
-target = open_list('/Users/a.gogohia/Documents/GitHub/data_type_agnostic_imputation/data/Numerical/quadratic_with_noise_1/sockeye_model_large/decode.target')
-directory = '/Users/a.gogohia/Documents/GitHub/data_type_agnostic_imputation/data/Numerical/quadratic_with_noise_1/sockeye_model_large'
+# target = open_list('/Users/a.gogohia/Documents/GitHub/data_type_agnostic_imputation/data/Numerical/quadratic_with_noise_1/sockeye_model_large/decode.target')
+# directory = '/Users/a.gogohia/Documents/GitHub/data_type_agnostic_imputation/data/Numerical/quadratic_with_noise_1/sockeye_model_large'
 
-mse_list = progress_mse(directory, target)
+# mse_list = progress_mse(directory, target)
