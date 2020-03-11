@@ -2,3 +2,5 @@ data/
 trained_with_no_nans/
 old/
 .DStore
+fully_trained
+california_housing_only.py
