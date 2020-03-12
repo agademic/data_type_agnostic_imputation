@@ -13,3 +13,4 @@ sockeye==1.18.106
 typing==3.7.4.1
 urllib3==1.25.7
 scikit-learn==0.22.1
+pandas==1.0.1
