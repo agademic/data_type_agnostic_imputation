@@ -2,7 +2,7 @@ certifi==2019.11.28
 chardet==3.0.4
 graphviz==0.8.4
 idna==2.8
-mxnet==1.5.0
+mxnet-cu100==1.5.1
 mxnet-mkl==1.4.1
 numpy==1.14.6
 portalocker==1.5.2
