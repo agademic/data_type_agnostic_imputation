@@ -22,7 +22,7 @@ for dataset in datasets:
             for miss in missingness:
                 print(miss)
                 try:
-                    command_prepr = f'python -m sockeye.train -d {dataset}/{typ}/{miss}/prepared_sockeye_data/ -vs {dataset}/{typ}/{miss}/dev.source -vt {dataset}/{typ}/{miss}/dev.target -vsf {dataset}/{typ}/{miss}/dev.source_factors --source-factors-num-embed 16 --transformer-feed-forward-num-hidden 128 --optimized-metric accuracy --metrics accuracy --batch-type sentence --batch-size 64 --max-num-checkpoint-not-improved 2 -o {dataset}/{typ}/{miss}//sockeye_model_xxl'
+                    command_prepr = f'python -m sockeye.train -d {dataset}/{typ}/{miss}/prepared_sockeye_data/ -vs {dataset}/{typ}/{miss}/dev.source -vt {dataset}/{typ}/{miss}/dev.target -vsf {dataset}/{typ}/{miss}/dev.source_factors --source-factors-num-embed 16 --transformer-feed-forward-num-hidden 128 --metrics accuracy --batch-type sentence --batch-size 64 --max-num-checkpoint-not-improved 2 -o {dataset}/{typ}/{miss}//sockeye_model_xxl'
                     print(command_prepr)
                     process = subprocess.Popen(command_prepr.split(), stdout=subprocess.PIPE)
                     output, error = process.communicate()
