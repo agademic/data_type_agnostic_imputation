@@ -24,7 +24,7 @@ for dataset in datasets:
                 for miss in missingness:
                     print(miss)
                     try:
-                        command_prepr = f'python -m sockeye.translate -m {dataset}/{typ}/{miss}/sockeye_model_xxl -i {dataset}/{typ}/{miss}/test.source -if {dataset}/{typ}/{miss}/test.source_factors --use-cpu -o {dataset}/{typ}/{miss}/translated_data_xxl'
+                        command_prepr = f'python -m sockeye.translate -m {dataset}/{typ}/{miss}/sockeye_model_xxl -i {dataset}/{typ}/{miss}/test.source -if {dataset}/{typ}/{miss}/test.source_factors -o {dataset}/{typ}/{miss}/translated_data_xxl'
                         print(command_prepr)
                         process = subprocess.Popen(command_prepr.split(), stdout=subprocess.PIPE)
                         output, error = process.communicate()
