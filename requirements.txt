@@ -4,7 +4,7 @@ graphviz==0.8.4
 idna==2.8
 mxnet==1.5.0
 mxnet-mkl==1.4.1
-numpy==1.14.6
+numpy==1.22.0
 portalocker==1.5.2
 PyYAML==5.3
 requests==2.22.0
